@@ -22,7 +22,7 @@ st.set_page_config(
 )
 
 # Custom CSS
-st.markdown("""
+st.html("""
 <style>
     .stApp { background: #0e1117; }
     .metric-card { background: #1a1f2e; border-radius: 12px; padding: 20px; margin: 5px; text-align: center; }
@@ -39,7 +39,7 @@ st.markdown("""
     .progress-bar { height: 8px; border-radius: 4px; background: #2a3441; }
     .sidebar-section { background: #1a1f2e; padding: 15px; border-radius: 10px; margin: 10px 0; }
 </style>
-""", unsafe_allow_html=True)
+""")
 
 # =============================================================================
 # DATA / STATE
@@ -106,16 +106,16 @@ def get_stats():
 # =============================================================================
 
 with st.sidebar:
-    st.markdown("## 🏭 AI24x7 Factory")
-    st.markdown("### Factory Dashboard")
+    st.html("## 🏭 AI24x7 Factory")
+    st.html("### Factory Dashboard")
     st.divider()
 
     config = load_config()
-    st.markdown(f"**Factory:** {config.get('factory', {}).get('name', 'My Factory')}")
-    st.markdown(f"**Status:** <span class='status-online'>● Online</span>", unsafe_allow_html=True)
+    st.html(f"**Factory:** {config.get('factory', {}).get('name', 'My Factory')}")
+    st.html(f"**Status:** <span class='status-online'>● Online</span>")
 
     shift, shift_progress = get_shift_data()
-    st.markdown(f"**Current Shift:** {shift}")
+    st.html(f"**Current Shift:** {shift}")
     st.progress(shift_progress / 100, text=f"{shift_progress:.0f}% complete")
 
     st.divider()
@@ -123,7 +123,7 @@ with st.sidebar:
     # Quick Stats in Sidebar
     stats = get_stats()
 
-    st.markdown("### 📊 Quick Stats")
+    st.html("### 📊 Quick Stats")
     col1, col2 = st.columns(2)
     with col1:
         st.metric("Workers", stats["total_workers"])
@@ -139,7 +139,7 @@ with st.sidebar:
     st.divider()
 
     # Camera List
-    st.markdown("### 📹 Cameras")
+    st.html("### 📹 Cameras")
     cameras = get_camera_feeds()
     for cam in cameras:
         if cam["status"] == "online":
@@ -148,12 +148,12 @@ with st.sidebar:
             color = "status-warning"
         else:
             color = "status-offline"
-        st.markdown(f"- {cam['name']}: <span class='{color}'>● {cam['status'].upper()}</span>", unsafe_allow_html=True)
+        st.html(f"- {cam['name']}: <span class='{color}'>● {cam['status'].upper()}</span>")
 
     st.divider()
 
     # Navigation
-    st.markdown("### 🧭 Navigation")
+    st.html("### 🧭 Navigation")
     page = st.radio("Go to", [
         "📊 Overview",
         "📹 Camera Feeds",
@@ -174,44 +174,44 @@ with st.sidebar:
 
 if page == "📊 Overview":
     st.title("🏭 Factory Overview Dashboard")
-    st.markdown(f"**{datetime.now().strftime('%A, %d %B %Y - %H:%M')}**")
+    st.html(f"**{datetime.now().strftime('%A, %d %B %Y - %H:%M')}**")
 
     # Top Metrics Row
     col1, col2, col3, col4 = st.columns(4)
 
     with col1:
-        st.markdown('<div class="metric-card">', unsafe_allow_html=True)
-        st.markdown(f'<div class="metric-value">{stats["total_workers"]}</div>', unsafe_allow_html=True)
-        st.markdown('<div class="metric-label">Active Workers</div>', unsafe_allow_html=True)
-        st.markdown('</div>', unsafe_allow_html=True)
+        st.html('<div class="metric-card">')
+        st.html(f'<div class="metric-value">{stats["total_workers"]}</div>')
+        st.html('<div class="metric-label">Active Workers</div>')
+        st.html('</div>')
 
     with col2:
-        st.markdown('<div class="metric-card">', unsafe_allow_html=True)
+        st.html('<div class="metric-card">')
         color = "green" if stats["ppe_compliance"] >= 90 else "orange" if stats["ppe_compliance"] >= 75 else "red"
-        st.markdown(f'<div class="metric-value" style="color: #{color if color=="green" else "orange" if color=="orange" else "ff4444"}">{stats["ppe_compliance"]}%</div>', unsafe_allow_html=True)
-        st.markdown('<div class="metric-label">PPE Compliance</div>', unsafe_allow_html=True)
-        st.markdown('</div>', unsafe_allow_html=True)
+        st.html(f'<div class="metric-value" style="color: #{color if color=="green" else "orange" if color=="orange" else "ff4444"}">{stats["ppe_compliance"]}%</div>')
+        st.html('<div class="metric-label">PPE Compliance</div>')
+        st.html('</div>')
 
     with col3:
-        st.markdown('<div class="metric-card">', unsafe_allow_html=True)
-        st.markdown(f'<div class="metric-value">{stats["alerts_today"]}</div>', unsafe_allow_html=True)
-        st.markdown('<div class="metric-label">Alerts Today</div>', unsafe_allow_html=True)
-        st.markdown('</div>', unsafe_allow_html=True)
+        st.html('<div class="metric-card">')
+        st.html(f'<div class="metric-value">{stats["alerts_today"]}</div>')
+        st.html('<div class="metric-label">Alerts Today</div>')
+        st.html('</div>')
 
     with col4:
-        st.markdown('<div class="metric-card">', unsafe_allow_html=True)
+        st.html('<div class="metric-card">')
         fire_color = "00ff88" if stats["fire_risk"] == "Low" else "ffaa00" if stats["fire_risk"] == "Medium" else "ff4444"
-        st.markdown(f'<div class="metric-value" style="color: #{fire_color}">{stats["fire_risk"]}</div>', unsafe_allow_html=True)
-        st.markdown('<div class="metric-label">Fire Risk Level</div>', unsafe_allow_html=True)
-        st.markdown('</div>', unsafe_allow_html=True)
+        st.html(f'<div class="metric-value" style="color: #{fire_color}">{stats["fire_risk"]}</div>')
+        st.html('<div class="metric-label">Fire Risk Level</div>')
+        st.html('</div>')
 
-    st.markdown("---")
+    st.html("---")
 
     # Camera Grid + Alerts Side by Side
     col_left, col_right = st.columns([2, 1])
 
     with col_left:
-        st.markdown("### 📹 Camera Status Grid")
+        st.html("### 📹 Camera Status Grid")
         cameras = get_camera_feeds()
 
         # 2x3 grid
@@ -223,7 +223,7 @@ if page == "📊 Overview":
                     cam = cameras[cam_idx]
                     with cols[col_idx]:
                         # Camera placeholder (black box with text)
-                        st.markdown(f"""
+                        st.html(f"""
                         <div style="background: #1a1f2e; border-radius: 10px; padding: 10px; text-align: center; border: 1px solid #2a3441;">
                             <div style="background: #0a0f1a; border-radius: 8px; height: 80px; display: flex; align-items: center; justify-content: center; margin-bottom: 8px;">
                                 <span style="color: #4a5568; font-size: 2rem;">📹</span>
@@ -235,10 +235,10 @@ if page == "📊 Overview":
                             </div>
                             <div style="font-size: 0.7rem; color: #6b7280; margin-top: 3px;">👥 {cam['persons']} | PPE {cam['ppe_score']}%</div>
                         </div>
-                        """, unsafe_allow_html=True)
+                        """)
 
     with col_right:
-        st.markdown("### 🚨 Live Alerts")
+        st.html("### 🚨 Live Alerts")
 
         alerts = get_alerts()
         critical = [a for a in alerts if a["type"] == "critical" and not a["handled"]]
@@ -247,39 +247,39 @@ if page == "📊 Overview":
 
         if critical:
             for a in critical:
-                st.markdown(f"""
+                st.html(f"""
                 <div class="alert-critical">
                     <div style="font-weight: bold; font-size: 0.85rem;">{a['message']}</div>
                     <div style="font-size: 0.75rem; opacity: 0.9; margin-top: 3px;">{a['camera']} • {(datetime.now()-a['time']).seconds//60}m ago</div>
                 </div>
-                """, unsafe_allow_html=True)
+                """)
 
         for a in warnings:
-            st.markdown(f"""
+            st.html(f"""
             <div class="alert-warning">
                 <div style="font-weight: bold; font-size: 0.85rem;">{a['message']}</div>
                 <div style="font-size: 0.75rem; opacity: 0.9; margin-top: 3px;">{a['camera']} • {(datetime.now()-a['time']).seconds//60}m ago</div>
             </div>
-            """, unsafe_allow_html=True)
+            """)
 
         for a in infos:
-            st.markdown(f"""
+            st.html(f"""
             <div class="alert-info">
                 <div style="font-weight: bold; font-size: 0.85rem;">{a['message']}</div>
                 <div style="font-size: 0.75rem; opacity: 0.9; margin-top: 3px;">{a['camera']} • {(datetime.now()-a['time']).seconds//60}m ago</div>
             </div>
-            """, unsafe_allow_html=True)
+            """)
 
         if st.button("🔔 Acknowledge All Alerts"):
             st.success("All alerts acknowledged")
 
-    st.markdown("---")
+    st.html("---")
 
     # Shift + Safety Score
     col1, col2 = st.columns(2)
 
     with col1:
-        st.markdown("### 🔄 Current Shift Progress")
+        st.html("### 🔄 Current Shift Progress")
         shift, progress = get_shift_data()
         st.info(f"**{shift} Shift** - {progress:.0f}% complete")
 
@@ -301,17 +301,17 @@ if page == "📊 Overview":
         st.progress(progress / 100)
 
         # Shift events
-        st.markdown("#### 📋 Shift Events")
+        st.html("#### 📋 Shift Events")
         for event in ["Shift started", "Morning briefing completed", "Equipment check OK", "PPE inspection passed"]:
-            st.markdown(f"✅ {event}")
+            st.html(f"✅ {event}")
 
     with col2:
-        st.markdown("### 🏆 Safety Score")
+        st.html("### 🏆 Safety Score")
         safety_score = 87
         score_color = "🟢" if safety_score >= 80 else "🟡" if safety_score >= 60 else "🔴"
-        st.markdown(f"#### {score_color} **{safety_score}/100**")
+        st.html(f"#### {score_color} **{safety_score}/100**")
 
-        st.markdown("""
+        st.html("""
         <div style="background: #1a1f2e; padding: 15px; border-radius: 10px; margin-top: 10px;">
             <div style="margin: 8px 0;">🔥 Fire Safety: <span style="color:#00ff88">95%</span></div>
             <div style="background: #2a3441; height: 6px; border-radius: 3px; margin-bottom: 10px;">
@@ -338,15 +338,15 @@ if page == "📊 Overview":
                 <div style="background: #00ff88; height: 6px; border-radius: 3px; width: 92%;"></div>
             </div>
         </div>
-        """, unsafe_allow_html=True)
+        """)
 
-    st.markdown("---")
+    st.html("---")
 
     # Bottom Row - Equipment + Quick Actions
     col1, col2, col3 = st.columns(3)
 
     with col1:
-        st.markdown("### ⚙️ Equipment Status")
+        st.html("### ⚙️ Equipment Status")
         equip = [
             ("Conveyor A", "Running", 98, True),
             ("Conveyor B", "Running", 95, True),
@@ -357,11 +357,11 @@ if page == "📊 Overview":
         ]
         for name, status, uptime, ok in equip:
             status_color = "🟢" if ok else "🔴"
-            st.markdown(f"{status_color} **{name}**: {status} ({uptime}%)")
+            st.html(f"{status_color} **{name}**: {status} ({uptime}%)")
 
     with col2:
-        st.markdown("### 📊 Today's Statistics")
-        st.markdown(f"""
+        st.html("### 📊 Today's Statistics")
+        st.html(f"""
         - **Workers Present:** {stats['total_workers']}
         - **Incidents:** 0
         - **PPE Violations:** 3
@@ -373,7 +373,7 @@ if page == "📊 Overview":
         """)
 
     with col3:
-        st.markdown("### ⚡ Quick Actions")
+        st.html("### ⚡ Quick Actions")
         if st.button("📸 Capture All Cameras"):
             with st.spinner("Capturing..."):
                 time.sleep(1)
@@ -414,7 +414,7 @@ elif page == "📹 Camera Feeds":
             cols = st.columns(len(row))
             for idx, cam in enumerate(row):
                 with cols[idx]:
-                    st.markdown(f"""
+                    st.html(f"""
                     <div style="background: #1a1f2e; border-radius: 12px; padding: 0; overflow: hidden; border: 1px solid #2a3441;">
                         <div style="background: #0a0f1a; height: 150px; display: flex; align-items: center; justify-content: center;">
                             <span style="font-size: 3rem;">📹</span>
@@ -432,13 +432,13 @@ elif page == "📹 Camera Feeds":
                             </div>
                         </div>
                     </div>
-                    """, unsafe_allow_html=True)
+                    """)
 
     elif view_mode == "Single Full":
         cam_name = st.selectbox("Select Camera", [c["name"] for c in cameras])
         cam = next(c for c in cameras if c["name"] == cam_name)
 
-        st.markdown(f"""
+        st.html(f"""
         <div style="background: #1a1f2e; border-radius: 12px; overflow: hidden; border: 2px solid #00d4aa;">
             <div style="background: #000; height: 450px; display: flex; align-items: center; justify-content: center;">
                 <div style="text-align: center;">
@@ -452,7 +452,7 @@ elif page == "📹 Camera Feeds":
                 <div><div style="color: #8b95a5; font-size: 0.7rem;">PPE Score</div><div style="font-weight: bold; color: #00d4aa;">{cam['ppe_score']}%</div></div>
             </div>
         </div>
-        """, unsafe_allow_html=True)
+        """)
 
         col1, col2, col3, col4 = st.columns(4)
         with col1:
@@ -469,16 +469,16 @@ elif page == "📹 Camera Feeds":
         for cam in filtered:
             col1, col2, col3, col4, col5 = st.columns([3, 1, 1, 1, 1])
             with col1:
-                st.markdown(f"**{cam['name']}** (#{cam['id']})")
+                st.html(f"**{cam['name']}** (#{cam['id']})")
             with col2:
-                st.markdown(f"👥 {cam['persons']}")
+                st.html(f"👥 {cam['persons']}")
             with col3:
-                st.markdown(f"PPE: {cam['ppe_score']}%")
+                st.html(f"PPE: {cam['ppe_score']}%")
             with col4:
-                st.markdown(f"⏱️ {cam['last_alert']}")
+                st.html(f"⏱️ {cam['last_alert']}")
             with col5:
                 status_color = "🟢" if cam['status']=='online' else "🟡" if cam['status']=='warning' else "🔴"
-                st.markdown(f"{status_color} {cam['status']}")
+                st.html(f"{status_color} {cam['status']}")
 
 # =============================================================================
 # PAGE: SAFETY ALERTS
@@ -507,7 +507,7 @@ elif page == "🔥 Safety Alerts":
         icon = "🔴" if a["type"] == "critical" else "🟡" if a["type"] == "warning" else "🔵"
         bg = "#ff4444" if a["type"] == "critical" else "#ffaa00" if a["type"] == "warning" else "#0088ff"
 
-        st.markdown(f"""
+        st.html(f"""
         <div style="background: #1a1f2e; border-radius: 10px; padding: 15px; margin: 8px 0; border-left: 4px solid {bg};">
             <div style="display: flex; justify-content: space-between; align-items: center;">
                 <div>
@@ -520,7 +520,7 @@ elif page == "🔥 Safety Alerts":
                 </div>
             </div>
         </div>
-        """, unsafe_allow_html=True)
+        """)
 
         col_btn1, col_btn2 = st.columns(2)
         with col_btn1:
@@ -530,10 +530,10 @@ elif page == "🔥 Safety Alerts":
             if st.button(f"📞 Escalate", key=f"esc_{a['time'].timestamp()}"):
                 st.warning("Alert escalated to manager")
 
-    st.markdown("---")
+    st.html("---")
 
     # Alert Statistics
-    st.markdown("### 📊 Alert Statistics (Last 7 Days)")
+    st.html("### 📊 Alert Statistics (Last 7 Days)")
     days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Today"]
     fire_vals = [2, 1, 0, 3, 1, 0, 1]
     ppe_vals = [5, 3, 4, 2, 6, 1, 2]
@@ -547,13 +547,13 @@ elif page == "🪖 PPE Compliance":
     st.title("🪖 PPE Compliance Dashboard")
 
     overall = 91
-    st.markdown(f"""
+    st.html(f"""
     <div style="background: linear-gradient(135deg, #00d4aa, #00a866); border-radius: 15px; padding: 25px; text-align: center; margin: 15px 0;">
         <div style="font-size: 3rem; font-weight: bold; color: white;">{overall}%</div>
         <div style="color: rgba(255,255,255,0.8); font-size: 1.1rem;">Overall PPE Compliance</div>
         <div style="color: rgba(255,255,255,0.6); font-size: 0.85rem; margin-top: 5px;">Target: 95% | Current: Good</div>
     </div>
-    """, unsafe_allow_html=True)
+    """)
 
     col1, col2, col3, col4 = st.columns(4)
     col1.metric("Helmet", "96%", delta=2)
@@ -563,22 +563,22 @@ elif page == "🪖 PPE Compliance":
 
     st.divider()
 
-    st.markdown("### 📹 Camera-wise PPE Score")
+    st.html("### 📹 Camera-wise PPE Score")
     cameras = get_camera_feeds()
     for cam in cameras:
         score = cam["ppe_score"]
         bar_color = "#00ff88" if score >= 90 else "#ffaa00" if score >= 75 else "#ff4444"
-        st.markdown(f"**{cam['name']}** - {score}%")
-        st.markdown(f"""
+        st.html(f"**{cam['name']}** - {score}%")
+        st.html(f"""
         <div style="background: #2a3441; height: 10px; border-radius: 5px; margin-bottom: 15px;">
             <div style="background: {bar_color}; height: 10px; border-radius: 5px; width: {score}%;"></div>
         </div>
-        """, unsafe_allow_html=True)
+        """)
 
     st.divider()
 
     # Violation log
-    st.markdown("### ⚠️ Recent Violations")
+    st.html("### ⚠️ Recent Violations")
     violations = [
         ("Camera 3 - Paint Shop", "No Helmet", "Ramesh Kumar", "12 min ago"),
         ("Camera 1 - Assembly", "No Safety Vest", "Unknown", "28 min ago"),
@@ -587,12 +587,12 @@ elif page == "🪖 PPE Compliance":
     ]
 
     for cam, violation, person, time in violations:
-        st.markdown(f"""
+        st.html(f"""
         <div style="background: #1a1f2e; padding: 12px; border-radius: 8px; margin: 5px 0; border-left: 3px solid #ff4444;">
             <div style="font-weight: bold;">{violation}</div>
             <div style="color: #8b95a5; font-size: 0.85rem;">{cam} | {person} | {time}</div>
         </div>
-        """, unsafe_allow_html=True)
+        """)
 
     if st.button("📋 Export PPE Report"):
         st.success("PPE Report exported!")
@@ -606,7 +606,7 @@ elif page == "🔄 Shift Reports":
 
     col1, col2 = st.columns(2)
     with col1:
-        st.markdown("### Current Shift Summary")
+        st.html("### Current Shift Summary")
         shift, progress = get_shift_data()
         st.info(f"**{shift} Shift** - {progress:.0f}% complete")
     with col2:
@@ -615,7 +615,7 @@ elif page == "🔄 Shift Reports":
     st.divider()
 
     # Report Preview
-    st.markdown("""
+    st.html("""
     | Metric | Value |
     |--------|-------|
     | Total Workers | 47 |
@@ -637,7 +637,7 @@ elif page == "🔄 Shift Reports":
 
     st.divider()
 
-    st.markdown("### 📊 Historical Shift Data")
+    st.html("### 📊 Historical Shift Data")
     st.line_chart({
         "Morning": [89, 92, 88, 94, 91],
         "Afternoon": [85, 87, 90, 88, 93],
@@ -651,7 +651,7 @@ elif page == "🔄 Shift Reports":
 elif page == "⚙️ Equipment":
     st.title("⚙️ Equipment Monitoring")
 
-    st.markdown("### Real-time Equipment Status")
+    st.html("### Real-time Equipment Status")
 
     equipment = [
         ("Conveyor A", "Running", "98%", "Normal", "8h 23m"),
@@ -667,16 +667,16 @@ elif page == "⚙️ Equipment":
     for name, status, uptime, condition, runtime in equipment:
         col1, col2, col3, col4, col5, col6 = st.columns([3, 1, 1, 1, 1, 1])
         with col1:
-            st.markdown(f"**{name}**")
+            st.html(f"**{name}**")
         with col2:
             color = "🟢" if status == "Running" else "🔴"
-            st.markdown(f"{color} {status}")
+            st.html(f"{color} {status}")
         with col3:
-            st.markdown(uptime)
+            st.html(uptime)
         with col4:
-            st.markdown(condition)
+            st.html(condition)
         with col5:
-            st.markdown(runtime)
+            st.html(runtime)
         with col6:
             if st.button(f"⚙️", key=f"cfg_{name}"):
                 st.info(f"Configuring {name}")
@@ -688,32 +688,32 @@ elif page == "⚙️ Equipment":
 elif page == "📱 Notifications":
     st.title("📱 Notification Settings")
 
-    st.markdown("### 📲 Alert Channels")
+    st.html("### 📲 Alert Channels")
 
-    st.markdown("#### Telegram")
+    st.html("#### Telegram")
     st.toggle("Enable Telegram Alerts", value=True)
     st.text_input("Bot Token", value="8751634203:AAEtay1...", disabled=True)
     st.text_input("Chat ID", value="8566322083")
 
-    st.markdown("---")
-    st.markdown("#### SMS")
+    st.html("---")
+    st.html("#### SMS")
     st.toggle("Enable SMS Alerts", value=False)
     st.text_input("SMS API Key", type="password")
     st.text_input("Recipients (comma separated)", value="+91-XXXXX")
 
-    st.markdown("---")
-    st.markdown("#### WhatsApp")
+    st.html("---")
+    st.html("#### WhatsApp")
     st.toggle("Enable WhatsApp", value=False)
     st.text_input("WhatsApp Business Number")
 
-    st.markdown("---")
-    st.markdown("#### Email")
+    st.html("---")
+    st.html("#### Email")
     st.toggle("Enable Email Alerts", value=False)
     st.text_input("SMTP Server")
     st.text_input("Email Recipients")
 
-    st.markdown("---")
-    st.markdown("### 🔔 Alert Rules")
+    st.html("---")
+    st.html("### 🔔 Alert Rules")
 
     alert_rules = [
         ("Fire Detected", True, "All", "Critical"),
@@ -727,14 +727,14 @@ elif page == "📱 Notifications":
     for name, enabled, send_to, severity in alert_rules:
         col1, col2, col3, col4, col5 = st.columns([3, 1, 1, 1, 1])
         with col1:
-            st.markdown(f"**{name}**")
+            st.html(f"**{name}**")
         with col2:
             st.toggle("", value=enabled, key=f"toggle_{name}")
         with col3:
-            st.markdown(f"`{send_to}`")
+            st.html(f"`{send_to}`")
         with col4:
             color = "🔴" if severity == "Critical" else "🟡" if severity == "Warning" else "🔵"
-            st.markdown(f"{color} {severity}")
+            st.html(f"{color} {severity}")
         with col5:
             st.button("✏️", key=f"edit_{name}")
 
@@ -748,7 +748,7 @@ elif page == "📱 Notifications":
 elif page == "⚙️ Settings":
     st.title("⚙️ System Settings")
 
-    st.markdown("### 🏭 Factory Configuration")
+    st.html("### 🏭 Factory Configuration")
 
     factory_name = st.text_input("Factory Name", value="Alpha Industries - Unit 1")
     factory_id = st.text_input("Factory ID", value="FACT-001")
@@ -760,8 +760,8 @@ elif page == "⚙️ Settings":
     with col2:
         st.selectbox("Time Zone", ["IST (UTC+5:30)", "UTC", "EST (UTC-5)"])
 
-    st.markdown("---")
-    st.markdown("### 📹 Camera Management")
+    st.html("---")
+    st.html("### 📹 Camera Management")
 
     st.button("➕ Add Camera")
     st.button("🔄 Auto-detect Cameras")
@@ -779,8 +779,8 @@ elif page == "⚙️ Settings":
             if cols[1].button("🗑️ Delete", key=f"del_{cam['id']}"):
                 st.error("Camera deleted!")
 
-    st.markdown("---")
-    st.markdown("### 🔄 Shift Configuration")
+    st.html("---")
+    st.html("### 🔄 Shift Configuration")
 
     shifts = [
         ("Morning", "06:00", "14:00"),
@@ -791,7 +791,7 @@ elif page == "⚙️ Settings":
     for name, start, end in shifts:
         cols = st.columns([2, 2, 2, 1])
         with cols[0]:
-            st.markdown(f"**{name}**")
+            st.html(f"**{name}**")
         with cols[1]:
             st.text_input(f"Start ({name})", value=start, key=f"start_{name}")
         with cols[2]:
@@ -799,20 +799,20 @@ elif page == "⚙️ Settings":
         with cols[3]:
             st.toggle("Enable", value=True, key=f"enable_{name}")
 
-    st.markdown("---")
-    st.markdown("### 🛡️ Safety Rules")
+    st.html("---")
+    st.html("### 🛡️ Safety Rules")
 
     st.toggle("Auto-alert on Fire", value=True)
     st.toggle("Auto-alert on PPE Violation", value=True)
     st.toggle("Voice Announcement on Fire", value=True)
     st.number_input("Alert Repeat Interval (minutes)", value=5, min_value=1, max_value=60)
 
-    st.markdown("---")
+    st.html("---")
     if st.button("💾 Save All Settings", type="primary"):
         st.success("Settings saved successfully!")
 
-    st.markdown("---")
-    st.markdown("### 🔄 System")
+    st.html("---")
+    st.html("### 🔄 System")
     if st.button("🔄 Restart All Services"):
         with st.spinner("Restarting..."):
             time.sleep(2)
@@ -821,7 +821,7 @@ elif page == "⚙️ Settings":
     if st.button("📦 Update System"):
         st.info("No updates available")
 
-    st.markdown(f"""
+    st.html(f"""
     ---
     **AI24x7 Factory Edition v1.0.0**
     Factory ID: FACT-001 | License: ACTIVE
@@ -832,4 +832,4 @@ elif page == "⚙️ Settings":
 # Auto-refresh removed (not available in this Streamlit version)
 
 if __name__ == "__main__":
-    st.markdown("Run with: `streamlit run factory/dashboard/factory_dashboard.py --server.port 5052`")
+    st.html("Run with: `streamlit run factory/dashboard/factory_dashboard.py --server.port 5052`")
