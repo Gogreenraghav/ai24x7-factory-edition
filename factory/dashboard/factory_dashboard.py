@@ -142,6 +142,91 @@ hr { border: none !important; border-top: 2px solid #1f2937 !important; margin: 
 .tw { color: #f9fafb !important; }
 .tk { color: #9ca3af !important; }
 
+/* ════ MOBILE RESPONSIVE ══════════════════════════════════════════════ */
+@media (max-width: 768px) {
+    /* Sidebar: collapse on mobile */
+    [data-testid="stSidebar"] { width: 100% !important; border-right: none !important; border-top: 2px solid #1f2937 !important; }
+    section[data-testid="stSidebar"] > div { width: 100% !important; max-width: 100% !important; }
+    
+    /* Sidebar content: horizontal scroll on top */
+    [data-testid="stSidebar"] { height: auto !important; max-height: none !important; }
+    
+    /* Metric cards: 2 per row on tablet, 1 on phone */
+    [data-testid="stHorizontalBlock"]:has(.metric-card) > div,
+    .metric-card { min-width: calc(50% - 8px) !important; }
+    
+    /* Camera grid: 2 columns on tablet, 1 on phone */
+    [data-testid="stHorizontalBlock"]:has(.cam-card) > div,
+    .cam-card { min-width: calc(50% - 8px) !important; }
+    .cam-thumb { height: 90px !important; }
+    
+    /* All columns: stack on mobile */
+    [data-testid="stHorizontalBlock"] { flex-wrap: wrap !important; }
+    [data-testid="stHorizontalBlock"] > div { min-width: 100% !important; flex: 0 0 100% !important; }
+    
+    /* Metric numbers smaller on mobile */
+    .mnum { font-size: 1.8rem !important; }
+    
+    /* Tab bar: horizontal scroll */
+    .stTabs { overflow-x: auto !important; white-space: nowrap !important; }
+    .stTabs [data-testid="stTab"] { min-width: max-content !important; font-size: 0.72rem !important; padding: 8px 14px !important; }
+    
+    /* Section headers */
+    .sec-hdr { flex-wrap: wrap; }
+    .sec-line { display: none; }
+    
+    /* Alert cards */
+    .alert-card { padding: 10px 12px !important; }
+    .a-title { font-size: 0.8rem !important; }
+    
+    /* Equipment rows */
+    .equip-row { flex-wrap: wrap !important; gap: 6px !important; }
+    .equip-name { min-width: 100% !important; }
+    .equip-bar { min-width: 100% !important; }
+    
+    /* Buttons: full width on mobile */
+    .stButton > button { width: 100% !important; }
+    
+    /* Page title */
+    .stMarkdown h1 { font-size: 1.2rem !important; }
+    .stMarkdown h2 { font-size: 1rem !important; }
+    .stMarkdown h3 { font-size: 0.9rem !important; }
+    
+    /* Tables: horizontal scroll */
+    [data-testid="stTable"] { overflow-x: auto !important; }
+    
+    /* Select box, inputs */
+    .stSelectbox, .stTextInput { width: 100% !important; }
+}
+
+/* Phone only (max 480px) */
+@media (max-width: 480px) {
+    [data-testid="stHorizontalBlock"] > div { min-width: 100% !important; }
+    .metric-card { min-width: 100% !important; }
+    .cam-card { min-width: 100% !important; }
+    .mnum { font-size: 1.6rem !important; }
+    .cam-thumb { height: 80px !important; font-size: 2.2rem !important; }
+    .stTabs [data-testid="stTab"] { font-size: 0.62rem !important; padding: 6px 10px !important; }
+    .cam-name { font-size: 0.78rem !important; }
+    .a-title { font-size: 0.75rem !important; }
+    .a-msg { font-size: 0.68rem !important; }
+    .prog-lbl { flex-wrap: wrap; }
+    .prog-lbl-r { margin-top: 2px; }
+    .foot { font-size: 0.55rem !important; }
+}
+
+/* Tablet (481px - 768px) */
+@media (min-width: 481px) and (max-width: 768px) {
+    [data-testid="stHorizontalBlock"] > div { min-width: calc(50% - 8px) !important; flex: 1 1 calc(50% - 8px) !important; }
+    .metric-card { min-width: calc(50% - 8px) !important; }
+    .cam-card { min-width: calc(50% - 8px) !important; }
+}
+
+/* Desktop (769px+) */
+@media (min-width: 769px) {
+    [data-testid="stHorizontalBlock"] > div { flex: 1 1 auto !important; }
+}
+
 /* FOOTER */
 .foot { text-align: center; font-size: 0.65rem !important; font-weight: 600 !important; color: #1f2937; padding: 16px 0; }
 
@@ -804,9 +889,9 @@ with page[7]:
         with sc2:
             st.text_input(f"Start ({nm})", value=st3.split("–")[0], key=f"ss{nm}")
         with sc3:
-            st.text_input(f"End ({nm})", value=st3.split("–")[1], key=f"ena{nm}")
+            st.text_input(f"End ({nm})", value=st3.split("–")[1], key=f"se{nm}")
         with sc4:
-            st.toggle("Enable", value=en, key=f"ena{nm}")
+            st.toggle("On", value=en, key=f"tk{nm}")
 
     st.markdown("")
     st.markdown("""
