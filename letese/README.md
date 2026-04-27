@@ -1,103 +1,82 @@
-# Letese — Legal Tech Platform
+# LETESE — Legal Practice Management SaaS
 
-> Legal services SaaS platform for Indian businesses — company registration, compliance, Fire NOC, CA/CS services, and legal advisory.
+> AI-powered legal practice management platform for Indian advocates and law firms.
 
----
-
-## 📁 Project Structure
-
-```
-letese/
-├── docs/                          # Complete project documentation
-│   ├── 01-project-overview.md     # What is Letese, mission, tech stack
-│   ├── 02-database-schema.md      # PostgreSQL schema — 12 tables, all columns
-│   ├── 03-flutterflow-setup.md    # FlutterFlow screens — step-by-step setup
-│   ├── 04-fastapi-backend-structure.md  # FastAPI file-by-file structure
-│   └── 05-user-flows.md           # All user flows — registration to payment
-│
-└── README.md                      # This file
-```
+**Version:** 1.0 | **Date:** 27 April 2026 | **Company:** GOUP Consultancy Services LLP
 
 ---
 
-## 📋 Documentation Index
+## 🌐 Three-URL Ecosystem
 
-| Doc | What it covers |
-|-----|---------------|
-| `01-project-overview.md` | What Letese is, mission, services, tech stack, target users |
-| `02-database-schema.md` | 12 PostgreSQL tables, every column, type, index, enum, relationship |
-| `03-flutterflow-setup.md` | 20+ FlutterFlow screens, every component, field, API integration, deployment |
-| `04-fastapi-backend-structure.md` | Every backend file, function, API route, service layer, migration |
-| `05-user-flows.md` | 10 complete user flows: login, registration, case creation, payment, chat, admin |
+| URL | Purpose | Tech | Status |
+|-----|---------|------|--------|
+| [letese.xyz](https://letese.xyz) | Marketing Website | React SPA | ✅ Needs branding fix |
+| [app.letese.xyz](https://app.letese.xyz) | Advocate Dashboard | Flutter Web+App | 🔴 NO backend |
+| [admin.letese.xyz](https://admin.letese.xyz) | Super Admin | Flutter Web+App | 🔴 WRONG DATA |
 
 ---
 
-## 🚀 Development Phases
+## 📁 Documentation Index
 
-### Phase 1: Foundation
-- [ ] Setup PostgreSQL database
-- [ ] Run initial Alembic migration
-- [ ] Seed services data (`scripts/seed_services.py`)
-- [ ] Create first admin user (`scripts/create_admin.py`)
-
-### Phase 2: Backend API
-- [ ] Auth: Register, Login, OTP, JWT, Refresh tokens
-- [ ] Users: Profile, Avatar upload
-- [ ] Services: CRUD, listing, categories
-- [ ] Cases: Create, Submit, Update, List, Detail, Status history
-- [ ] Documents: Upload (S3), Download (presigned URL), Verify
-- [ ] Messages: Case chat thread
-- [ ] Payments: Razorpay integration
-- [ ] Notifications: In-app + Email
-
-### Phase 3: FlutterFlow Frontend
-- [ ] Auth screens (Login, Register, OTP, Forgot Password)
-- [ ] Home / Dashboard
-- [ ] Service Catalog + Detail
-- [ ] Case Creation (4-step wizard)
-- [ ] My Cases list + Detail
-- [ ] Case Chat
-- [ ] Profile & Settings
-- [ ] Notifications
-- [ ] Payment flow
-
-### Phase 4: Admin Panel
-- [ ] Admin dashboard
-- [ ] Case management (all cases, filters, bulk actions)
-- [ ] Document verification UI
-- [ ] User management
-- [ ] Analytics & reporting
+| File | Contents |
+|------|---------|
+| `docs/01-project-overview.md` | Product, AIPOT agents, tech stack, pricing, brand colors |
+| `docs/02-database-schema.md` | 25 PostgreSQL tables, all columns, enums, RLS |
+| `docs/03-60-day-build-plan.md` | Week-by-week 60-day build schedule |
+| `docs/04-fastapi-backend-structure.md` | Backend file structure, all API routes |
+| `docs/05-aipot-agents.md` | Deep dive on all 8 AIPOT agents |
 
 ---
 
-## ⏱️ Time Estimates
+## 8 AIPOT Agents
 
-| Task | Estimated Time |
-|------|---------------|
-| Documentation (this phase) | ✅ Complete |
-| Backend API (full) | 7–10 days |
-| FlutterFlow frontend | 14–18 days |
-| Admin panel | 5–7 days |
-| Testing + bug fixes | 5–7 days |
-| Deployment + monitoring | 2–3 days |
-| **Total** | **~1.5 – 2 months** |
-
----
-
-## 🔗 Key Links
-
-- **FlutterFlow**: https://app.flutterflow.io
-- **Backend API**: https://api.letese.xyz
-- **Admin Panel**: https://admin.letese.xyz
-- **Website**: https://letese.xyz
-- **Support**: support@letese.co
+| Agent | Function | Priority |
+|-------|----------|----------|
+| 🤖 **AIPOT-SCRAPER** | Court portal monitoring 24/7 | 🔴 HIGH |
+| 🤖 **AIPOT-DRAFT** | AI petition drafting (Qwen3-VL) | 🔴 HIGH |
+| 🤖 **AIPOT-COMPLIANCE** | Draft validation + checklist | 🔴 HIGH |
+| 🤖 **AIPOT-COMMUNICATOR** | WhatsApp/SMS/Email/Voice reminders | 🔴 HIGH |
+| 🤖 **AIPOT-POLICE** | System health monitoring | 🟡 MEDIUM |
+| 🤖 **AIPOT-BILLING** | Invoice + GST + Razorpay | 🟡 MEDIUM |
+| 🤖 **AIPOT-RESEARCH** | pgvector legal search | 🟢 LOW |
+| 🤖 **AIPOT-TRANSLATE** | EN/HI/PA translation | 🟡 MEDIUM |
 
 ---
 
-## 📅 Created
+## Tech Stack
 
-- **Date**: 2026-04-27
-- **Phase**: Planning & Documentation
-- **Status**: 🟡 In Progress
+| Layer | Technology | Location |
+|-------|-----------|----------|
+| Backend | Python FastAPI | 43.242.224.231 (REBUILD) |
+| Database | PostgreSQL + pgvector | 187.127.139.147:5433 |
+| Real-time | MongoDB | 187.127.139.147:27018 |
+| Cache | Redis | 187.127.139.147:6379 |
+| Queue | Kafka | 43.242.224.231 (to install) |
+| AI | Qwen3-VL-8B | 43.242.224.231:8080 |
+| Payments | Razorpay | To connect |
+| WhatsApp | 360dialog BSP | To connect |
+| SMS | MSG91 | To connect |
 
-_Last updated: 2026-04-27_
+---
+
+## Critical Issues (MUST FIX FIRST)
+
+1. 🔴 API Server (port 4007) = ZUMMP API — REBUILD NEEDED
+2. 🔴 Super Admin shows ZUMMP data — FIX BRANDING
+3. 🔴 Customer Dashboard has NO backend connection
+4. 🔴 Pricing mismatch in DB (₹999/₹2999 vs ₹4999/₹10999)
+
+---
+
+## Running Cost
+
+- **Server:** ₹0 (already paid)
+- **AI:** ₹0 (your GPU)
+- **Total:** ₹8,000–20,000/mo
+- **vs Competition:** ₹20,000+/mo
+
+---
+
+## Status
+
+🟡 **PLANNING COMPLETE** — Ready to build
