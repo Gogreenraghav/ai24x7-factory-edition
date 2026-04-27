@@ -1,0 +1,28 @@
+version: "3.8"
+services:
+  ai24x7-factory:
+    image: ai24x7-docker-ai24x7-factory:latest
+    container_name: ai24x7-factory
+    hostname: ai24x7-factory
+    restart: unless-stopped
+    ports:
+      - "5050:5050"
+      - "5052:5052"
+      - "5053:5053"
+      - "5054:5054"
+      - "5055:5055"
+      - "8080:8080"
+    volumes:
+      - ./data/models:/data/models
+      - ./data/db:/data/db
+      - ./data/logs:/data/logs
+      - ./data/config:/data/config
+      - ./data/captures:/data/captures
+    environment:
+      - TZ=Asia/Kolkata
+    healthcheck:
+      test: ["CMD", "python3", "/opt/ai24x7-factory/healthcheck.py"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
