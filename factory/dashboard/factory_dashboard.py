@@ -829,7 +829,7 @@ elif page == "⚙️ Settings":
     """)
 
 # Auto-refresh every 30 seconds
-st_autorefresh = st.interval(30, "page_refresh", None, False)
+# Auto-refresh removed (not available in this Streamlit version)
 
 if __name__ == "__main__":
     st.markdown("Run with: `streamlit run factory/dashboard/factory_dashboard.py --server.port 5052`")
