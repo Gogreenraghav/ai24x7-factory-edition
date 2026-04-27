@@ -116,7 +116,7 @@ with st.sidebar:
 
     shift, shift_progress = get_shift_data()
     st.markdown(f"**Current Shift:** {shift}")
-    st.progress(shift_progress, text=f"{shift_progress:.0f}% complete")
+    st.progress(shift_progress / 100, text=f"{shift_progress:.0f}% complete")
 
     st.divider()
 
