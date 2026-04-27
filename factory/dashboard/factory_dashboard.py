@@ -292,11 +292,11 @@ if page == "📊 Overview":
 
         col_a, col_b, col_c = st.columns(3)
         with col_a:
-            st.metric("Start", shift_info[0])
+            st.metric("Start", shift_info[0][0])
         with col_b:
-            st.metric("End", shift_info[1])
+            st.metric("End", shift_info[0][1])
         with col_c:
-            st.metric("Duration", f"{shift_info[2]}h")
+            st.metric("Duration", f"{shift_info[1]}h")
 
         st.progress(progress / 100)
 
