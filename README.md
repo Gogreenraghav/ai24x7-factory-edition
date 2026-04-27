@@ -1,173 +1,90 @@
 # AI24x7 Factory Edition 🏭
 
-**Ready-Made Industrial AI Surveillance System**
+**Complete CCTV AI Surveillance System** — Fire Detection, PPE Compliance, ANPR, Face Recognition, Hindi+English Voice Alerts, Shift Reports, Equipment Monitoring.
 
-> One-command install: `curl -fsSL https://raw.githubusercontent.com/Gogreenraghav/ai24x7-factory-edition/main/install.sh | bash`
+## 🚀 Quick Start
 
-AI-powered 24/7 factory monitoring with PPE compliance, fire detection, equipment monitoring, and automatic shift reports. **No technical knowledge required.**
-
----
-
-## ⚡ Quick Install (5 Minutes)
-
+### Docker (Recommended — Offline Capable)
 ```bash
-# One command - everything automated!
-curl -fsSL https://raw.githubusercontent.com/Gogreenraghav/ai24x7-factory-edition/main/install.sh | bash
+# Download offline tarball from server:
+# scp root@43.242.224.231:/opt/ai24x7-docker/ai24x7-factory-offline.tar .
+
+# On any machine with Docker:
+docker load -i ai24x7-factory-offline.tar
+docker run -d --name ai24x7-factory --network host \
+  -v ./data:/data \
+  ai24x7-factory:latest
 ```
 
-The installer will:
-- ✅ Detect your GPU (NVIDIA automatically)
-- ✅ Install all dependencies
-- ✅ Download AI models
-- ✅ Configure cameras (wizard-style)
-- ✅ Setup license key
-- ✅ Configure alerts (Telegram, SMS)
-- ✅ Install as system service (auto-start on boot)
+### Or build from source:
+```bash
+git clone https://github.com/Gogreenraghav/ai24x7-factory-edition.git
+cd ai24x7-factory-edition
+docker compose up -d
+```
 
----
+## 📦 What's Inside
 
-## 🎯 What It Does
+| Service | Port | Description |
+|---------|------|-------------|
+| Factory Dashboard | 5052 | Streamlit UI — **Day/Night Theme** |
+| CCTV API | 5050 | AI-powered CCTV analysis (Qwen3VL-8B) |
+| License Server | 5053 | License validation & plans |
+| Camera API | 5054 | Real-time stream processing |
+| Payment Server | 5055 | Stripe payment integration |
+| AI Server | 8080 | Local LLM inference |
 
-### Safety Features
-| Feature | Description |
-|---------|-------------|
-| 🔥 Fire Detection | Detect fire/smoke in 2-3 seconds |
-| 🪖 PPE Compliance | Check helmet, vest, gloves, shoes |
-| 🏃 Fall Detection | Worker fall detection + alert |
-| 🛢️ Spill Detection | Oil/chemical spill on floor |
-| ⛔ Danger Zones | Restricted area monitoring |
+## 🎨 Features
 
-### Operations
-| Feature | Description |
-|---------|-------------|
-| 🚗 ANPR | Vehicle number plate recognition |
-| ⚙️ Equipment Monitor | Machine running/stopped status |
-| 📦 Production Count | Auto item counting via camera |
-| 🔄 Shift Reports | Auto PDF reports at shift end |
+- 📊 **Dashboard** — 8 tabs: Overview, Camera Feeds, Safety Alerts, PPE Compliance, Shift Reports, Equipment, Notifications, Settings
+- 🌙 **Day/Night Theme** — One-click toggle
+- 🗄️ **SQLite Database** — Cameras, alerts, workers, violations, equipment, shifts
+- 🔥 **Fire Detection** — Color-based + AI
+- 🪖 **PPE Compliance** — Helmet, vest, gloves, shoes
+- 🔄 **Shift Reports** — Auto-generated
+- 📱 **Telegram Alerts** — Instant notifications
+- 💳 **Stripe Payments** — Factory Lite/Pro/Enterprise plans
 
-### Alerts
-| Channel | Status |
-|---------|--------|
-| 📱 SMS | Damini/Fast2SMS |
-| 💬 WhatsApp | Business API |
-| ✈️ Telegram | Bot alerts |
-| 🔊 Voice | Hindi/English TTS announcements |
+## 💰 Plans
 
----
-
-## 💰 Pricing
-
-| Plan | Cameras | Price/Month |
-|------|---------|-------------|
+| Plan | Cameras | Price/mo |
+|------|---------|---------|
 | Factory Lite | 4 | ₹2,999 |
 | Factory Pro | 16 | ₹9,999 |
 | Enterprise | Unlimited | ₹24,999 |
 
-**Demo mode available without license key.**
+## 🌐 Access URLs
 
----
+- Dashboard: `http://YOUR_IP:5052`
+- API Docs: `http://YOUR_IP:5050/docs`
+- License: `http://YOUR_IP:5053`
+- Payment: `http://YOUR_IP:5055`
 
-## 🔐 License System
+## 🔧 Offline Deployment
 
-Every installation requires a license key:
+For air-gapped environments:
+1. Download `ai24x7-factory-offline.tar` (514MB)
+2. Transfer to offline machine
+3. `docker load -i ai24x7-factory-offline.tar`
+4. `docker compose up -d`
 
-```
-Format: FACTORY-XXXX-XXXX-XXXX-XXXX
-Hardware-bound: MAC + CPU ID
-Cloud validated: license.go-up.in:5053
-Grace period: 24 hours offline
-```
+## 📁 Data Volumes
 
-Get license: https://ai24x7.cloud/license
-
----
-
-## 🖥️ System Requirements
-
-| Component | Minimum | Recommended |
-|-----------|---------|-------------|
-| GPU | None (CPU) | **NVIDIA RTX 3060 12GB** |
-| RAM | 8GB | 16GB |
-| Storage | 100GB | 500GB SSD |
-| OS | Ubuntu 20.04+ / Windows 10+ | Ubuntu 22.04 LTS |
-| Cameras | Any IP camera with RTSP | Hikvision/Dahua |
-
----
-
-## 📋 Module Structure
-
-```
-ai24x7-factory/
-├── factory/
-│   ├── main.py              # Entry point
-│   ├── license_client.py     # License protection ⚠️
-│   ├── config.py            # Configuration
-│   ├── safety/
-│   │   ├── fire_detector.py  # 🔥 Fire/smoke
-│   │   ├── ppe_detector.py   # 🪖 PPE compliance
-│   │   └── fall_detector.py  # 🏃 Fall detection
-│   ├── operations/
-│   │   ├── anpr_camera.py    # 🚗 Number plates
-│   │   ├── equipment_monitor.py  # ⚙️ Machine status
-│   │   └── shift_manager.py  # 🔄 Shift tracking
-│   ├── alerts/
-│   │   ├── sms_alerts.py     # 📱 SMS
-│   │   ├── telegram_alerts.py # ✈️ Telegram
-│   │   └── tts_announcer.py # 🔊 Voice
-│   └── reporting/
-│       └── shift_report.py   # 📊 PDF reports
-├── install.sh                # ⬆️ ONE-CLICK INSTALL
-├── config.json              # Camera config
-└── .env                    # License key
+```yaml
+./data/models      # AI models (GGUF)
+./data/db          # SQLite databases
+./data/logs        # Application logs
+./data/config      # Configuration
+./data/captures    # Snapshots
 ```
 
----
+## 🔐 Security
 
-## 🚀 Usage
+- Change all tokens in `.env` before deployment
+- Use Stripe LIVE keys in production
+- Restrict port 5053 (License Server) to internal network
 
-```bash
-# After installation:
-systemctl status ai24x7-factory    # Check status
-systemctl restart ai24x7-factory   # Restart
+## 📞 Support
 
-# View logs:
-journalctl -u ai24x7-factory -f
-
-# Dashboard:
-# Open: http://YOUR_IP:5052
-```
-
----
-
-## 🔧 Add Cameras
-
-Edit `config.json`:
-
-```bash
-nano /opt/ai24x7-factory/config.json
-systemctl restart ai24x7-factory
-```
-
----
-
-## 📖 Full Documentation
-
-**Spec Document:** [AI24x7 Factory Edition - Complete Spec](https://docs.google.com/document/d/1Bls5HqGfUoY97JByLvEagDaYKgHeiM180ALqiVocCJ0/edit)
-
----
-
-## 🏭 For Manufacturing
-
-- Manufacturing plants
-- Steel factories
-- Chemical plants
-- Textile mills
-- Food processing
-- Warehouses
-- Construction sites
-
----
-
-**Owner: GOUP CONSULTANCY SERVICES LLP**
-**AI Assistant: Claude (Powered by AI24x7)**
-**Version: 1.0.0**
+**GOUP CONSULTANCY SERVICES LLP**  
+© 2026 — All rights reserved
