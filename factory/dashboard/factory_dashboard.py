@@ -804,9 +804,9 @@ with page[7]:
         with sc2:
             st.text_input(f"Start ({nm})", value=st3.split("–")[0], key=f"ss{nm}")
         with sc3:
-            st.text_input(f"End ({nm})", value=st3.split("–")[1], key=f"se{nm}")
+            st.text_input(f"End ({nm})", value=st3.split("–")[1], key=f"ena{nm}")
         with sc4:
-            st.toggle("Enable", value=en, key=f"se{nm}")
+            st.toggle("Enable", value=en, key=f"ena{nm}")
 
     st.markdown("")
     st.markdown("""
