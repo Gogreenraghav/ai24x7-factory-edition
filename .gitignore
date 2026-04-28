@@ -20,3 +20,8 @@ Thumbs.db
 # OpenClaw
 .clawhub/
 .openclaw/
+-e memory/
+memory/**
+config/
+config/**
+.gitignore
