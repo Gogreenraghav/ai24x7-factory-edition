@@ -1,0 +1,22 @@
+# Secrets - NEVER commit
+config/google_tokens.json
+config/*.json
+memory/*.md
+
+# Binary files
+*.pt
+*.jpg
+*.png
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.local
+*.log
+
+# OpenClaw
+.clawhub/
+.openclaw/
